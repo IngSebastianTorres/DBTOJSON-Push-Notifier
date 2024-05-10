@@ -11,8 +11,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
 CORS(app, resources={r"/save/*": {"origins": "*"}, r"/send/*":{"origins":"*"}})
 
-DER_BASE64_ENCODED_PRIVATE_KEY_FILE_PATH = os.path.join(os.getcwd(),"/DBTOJSON-Push-Notifier/private_key.txt")
-DER_BASE64_ENCODED_PUBLIC_KEY_FILE_PATH = os.path.join(os.getcwd(),"/DBTOJSON-Push-Notifier/public_key.txt")
+DER_BASE64_ENCODED_PRIVATE_KEY_FILE_PATH = os.path.join(os.getcwd(),"/app/DBTOJSON-Push-Notifier/private_key.txt")
+DER_BASE64_ENCODED_PUBLIC_KEY_FILE_PATH = os.path.join(os.getcwd(),"/app/DBTOJSON-Push-Notifier/public_key.txt")
 
 VAPID_PRIVATE_KEY = open(DER_BASE64_ENCODED_PRIVATE_KEY_FILE_PATH, "r+").readline().strip("\n")
 VAPID_PUBLIC_KEY = open(DER_BASE64_ENCODED_PUBLIC_KEY_FILE_PATH, "r+").read().strip("\n")
