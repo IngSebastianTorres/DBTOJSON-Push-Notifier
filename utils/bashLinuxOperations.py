@@ -7,10 +7,6 @@ def execute_shell_to_commit_push_jsonkpifile():
     try:
         subprocess.check_output(command, shell = True, executable="/bin/bash", stderr = subprocess.STDOUT)  
     except subprocess.CalledProcessError as cpe:
-            global result
-            result = cpe.output
+            print("Error executing sh commands", cpe)
     finally:
-        for line in result.splitlines():
-            print(line.decode())
-        print("Error executing sh commands")    
-    print("Finishing process on remote repository")
+        print("Finishing process on remote repository")
