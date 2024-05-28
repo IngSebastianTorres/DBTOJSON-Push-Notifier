@@ -53,9 +53,9 @@ def save():
     random_index= random.randint(1,1000000)
     name_of_file = "tokenSubscription"+str(random_index)
 
-    save_path="./tokens"
+    save_path="/app/DBTOJSON-Push-Notifier/tokens"
     completeName = os.path.join(save_path, name_of_file+".json")      
-    tokens_directory= os.path.join('.', 'tokens')
+    tokens_directory= os.path.join('/app/DBTOJSON-Push-Notifier/', 'tokens')
 
     token = request.json.get('token')   
     tokenConversion= json.loads(token)
