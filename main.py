@@ -99,7 +99,7 @@ def sendPushNotification():
         GET returns vapid public key which clients uses to send around push notification
     """
     message = json.dumps(payload)
-    save_path="./tokens"
+    save_path="/app/DBTOJSON-Push-Notifier/tokens"
     tokens_directory= os.path.join('.', 'tokens')
     try:
         contenido = os.listdir(tokens_directory)
