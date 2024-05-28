@@ -102,6 +102,7 @@ def sendPushNotification():
     save_path="/app/DBTOJSON-Push-Notifier/tokens"
     tokens_directory= os.path.join('.', 'tokens')
     try:
+        global contenido 
         contenido = os.listdir(tokens_directory)
     except:
         print("Error listando archivos en la ruta directorio de tokens especificada")
