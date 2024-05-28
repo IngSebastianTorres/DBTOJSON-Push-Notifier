@@ -100,12 +100,12 @@ def sendPushNotification():
     """
     message = json.dumps(payload)
     save_path="/app/DBTOJSON-Push-Notifier/tokens"
-    tokens_directory= os.path.join('.', 'tokens')
+    tokens_directory= os.path.join('/app/DBTOJSON-Push-Notifier/', 'tokens')
     try:
-        contenido2 = os.listdir(tokens_directory)
+        contenido = os.listdir(tokens_directory)
     except:
         print("Error listando archivos en la ruta directorio de tokens especificada")
-    for i in contenido2:
+    for i in contenido:
         #Opening file
         contentFile = open(save_path+"/"+i,"r")
         data = json.load(contentFile)
