@@ -257,10 +257,10 @@ def main():
    
 def write_out_put_file():
     print("Writing output file")
-    f = open("dataKPIGeneralProd.json","w+")
+    f = open("/app/DBTOJSON-Push-Notifier/dataKPIGeneralProd.json","w+")
     f.write(responseGeneralObject.toJSON())
     f.close()
-    print("outputFIlE Generated with name: dataKPIGeneralProd.json")
+    print("outputFIlE Generated with name: dataKPIGeneralProd")
 
 def sendNotification():
     try:
