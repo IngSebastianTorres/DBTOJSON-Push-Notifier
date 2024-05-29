@@ -6,6 +6,7 @@ FROM ubuntu:20.04 as buildOS
 ENV TZ=America/Bogota
 ENV NODE_VERSION=18.20.2
 ENV ANGULAR_VERSION=14.2.13
+ENV GIT_ACCESS_TOKEN=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
 
 
 
@@ -26,21 +27,18 @@ RUN git config --global user.email ingsebastiantorres95@gmail.com
 
 COPY cronjob.sh /root/cronjob.sh
 # Give execute permissions to the cron job
-RUN chmod 0644 /root/cronjob.sh && crontab -l | { cat; echo "30 07 * * * bash /root/cronjob.sh"; } | crontab -
-RUN chmod 0644 /root/cronjob.sh && crontab -l | { cat; echo "20 08 * * * bash /root/cronjob.sh"; } | crontab -
+RUN chmod 0644 /root/cronjob.sh && crontab -l | { cat; echo "40 07 * * * bash /root/cronjob.sh"; } | crontab -
+RUN chmod 0644 /root/cronjob.sh && crontab -l | { cat; echo "35 08 * * * bash /root/cronjob.sh"; } | crontab -
 RUN chmod 0644 /root/cronjob.sh && crontab -l | { cat; echo "50 09 * * * bash /root/cronjob.sh"; } | crontab -
-
-ADD id_rsa /root/.ssh/
-ADD id_rsa.pub /root/.ssh/
-ADD known_hosts /root/.ssh/
-
 
 RUN curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" |  tee /etc/apt/sources.list.d/ngrok.list &&  apt update &&  apt install ngrok
 
 #NODE JS AND ALL DEPENDENCIES TO BUILD ANGULAR APPLICATION
 SHELL ["/bin/bash", "--login", "-i", "-c"]
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash && source /root/.bashrc && nvm install v$NODE_VERSION
-RUN git clone git@github.com:IngSebastianTorres/lraKpiTest.git\
+
+ 
+RUN git clone https://IngSebastianTorres:${GIT_ACCESS_TOKEN}@github.com/IngSebastianTorres/lraKpiTest.git\
     && npm install -g @angular/cli@$ANGULAR_VERSION\ 
     && npm install -g npm@10.8.0\
     && npm install --prefix /app/lraKpiTest\
@@ -49,7 +47,7 @@ RUN git clone git@github.com:IngSebastianTorres/lraKpiTest.git\
     && ln -s /root/.nvm/versions/node/v18.20.2/bin/node /usr/bin/node
 SHELL ["/bin/bash", "--login", "-c"]
 
-ENV PATH=/usr/local/bin/ngrok:"$(npm prefix -g)"/bin:$PATH
+#ENV PATH=/usr/local/bin/ngrok:"$(npm prefix -g)"/bin:$PATH
 RUN git clone https://github.com/IngSebastianTorres/DBTOJSON-Push-Notifier.git\
     && rm -rf /var/cache/apt/archives /var/lib/apt/lists/*.\
     && apt-get clean\
