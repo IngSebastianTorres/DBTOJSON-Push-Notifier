@@ -256,9 +256,11 @@ def main():
         print("Fallo en el proceso de extracción, transformación y cargue de tabla History", e )    
    
 def write_out_put_file():
+    print("Writing output file")
     f = open("dataKPIGeneralProd.json","w+")
     f.write(responseGeneralObject.toJSON())
     f.close()
+    print("outputFIlE Generated with name: dataKPIGeneralProd.json")
 
 def sendNotification():
     try:
