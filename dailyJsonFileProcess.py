@@ -38,8 +38,8 @@ responseGeneralObject = ResponseGeneralObject
 def connectionDB():
     print("Connecting with Database")
     mydb = mysql.connector.connect(
-        host="172.21.0.3",
-        port="3306",  
+        host="devosfernando.com",
+        port="9999",  
         user="lra",
         password="ARQ2023LRA",
         database="planbackend"
