@@ -6,7 +6,9 @@ FROM ubuntu:20.04 as buildOS
 ENV TZ=America/Bogota
 ENV NODE_VERSION=18.20.2
 ENV ANGULAR_VERSION=14.2.13
-ENV PATH=/usr/local/bin/ngrok:$PATH
+
+
+
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 WORKDIR /app
@@ -24,7 +26,9 @@ RUN git config --global user.email ingsebastiantorres95@gmail.com
 
 COPY cronjob.sh /root/cronjob.sh
 # Give execute permissions to the cron job
-RUN chmod 0644 /root/cronjob.sh && crontab -l | { cat; echo "12 15 * * * bash /root/cronjob.sh"; } | crontab -
+RUN chmod 0644 /root/cronjob.sh && crontab -l | { cat; echo "30 07 * * * bash /root/cronjob.sh"; } | crontab -
+RUN chmod 0644 /root/cronjob.sh && crontab -l | { cat; echo "20 08 * * * bash /root/cronjob.sh"; } | crontab -
+RUN chmod 0644 /root/cronjob.sh && crontab -l | { cat; echo "50 09 * * * bash /root/cronjob.sh"; } | crontab -
 
 ADD id_rsa /root/.ssh/
 ADD id_rsa.pub /root/.ssh/
@@ -41,10 +45,11 @@ RUN git clone git@github.com:IngSebastianTorres/lraKpiTest.git\
     && npm install -g npm@10.8.0\
     && npm install --prefix /app/lraKpiTest\
     && cd /app/lraKpiTest\ 
-    && git checkout gh-pages
+    && git checkout gh-pages\
+    && ln -s /root/.nvm/versions/node/v18.20.2/bin/node /usr/bin/node
 SHELL ["/bin/bash", "--login", "-c"]
 
-# RUN certbot --nginx -d lrakpi.online -d www.lrakpi.online --non-interactive --agree-tos -m ingsebastiantorres95@gmail.com
+ENV PATH=/usr/local/bin/ngrok:"$(npm prefix -g)"/bin:$PATH
 RUN git clone https://github.com/IngSebastianTorres/DBTOJSON-Push-Notifier.git\
     && rm -rf /var/cache/apt/archives /var/lib/apt/lists/*.\
     && apt-get clean\

@@ -1,0 +1,1 @@
+python3 /app/DBTOJSON-Push-Notifier/dailyJsonFileProcess.py "cp /app/DBTOJSON-Push-Notifier/dataKPIGeneralProd.json /app/lraKpiTest/src && cd /app/lraKpiTest && /root/.nvm/versions/node/v18.20.2/bin/ng build --output-path docs --base-href /lraKpiTest/ && git add . && git commit -m 'KPI Updated' && git push origin gh-pages" > /app/resultKPIToFront.txt
