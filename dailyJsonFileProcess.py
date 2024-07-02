@@ -156,6 +156,8 @@ def jsonStandardObj(iterationRow):
     else: 
      if d>="11":
         d = int(d)-1
+     elif d=="02":
+        pass   
      else:
         d = int(d)-1
         d = "0"+str(d)
@@ -165,6 +167,10 @@ def jsonStandardObj(iterationRow):
     d = str(d)
     if d == "01":
         dateToCompare=prev_last_daymonth
+    elif d=="02":
+        d = int(d)-1
+        d = "0"+str(d)
+        dateToCompare=m+"/"+d+"/"+y
     else:
         dateToCompare=m+"/"+d+"/"+y
             
