@@ -27,6 +27,7 @@ month=Months([days],[days],[days],[days],[days],[days],[days],[days],[days],[day
 monthCopy2022=Months([days],[days],[days],[days],[days],[days],[days],[days],[days],[days],[days],[days])
 monthCopy2023=Months([days],[days],[days],[days],[days],[days],[days],[days],[days],[days],[days],[days])
 monthCopy2024=Months([days],[days],[days],[days],[days],[days],[days],[days],[days],[days],[days],[days])
+monthCopy2025=Months([days],[days],[days],[days],[days],[days],[days],[days],[days],[days],[days],[days])
 
 year=Years(0,month)
 years = []
@@ -38,8 +39,8 @@ responseGeneralObject = ResponseGeneralObject
 def connectionDB():
     print("Connecting with Database")
     mydb = mysql.connector.connect(
-        host="172.21.0.3",
-        port="3306",  
+        host="devosfernando.com",
+        port="7306",  
         user="lra",
         password="ARQ2023LRA",
         database="planbackend"
@@ -148,6 +149,7 @@ def jsonStandardObj(iterationRow):
 
     y=int(y)
     m=int(m)
+    substractDay = False
     if d == "01":
      this_first = date.today().replace(day=1)
      global prev_last_daymonth
@@ -157,33 +159,44 @@ def jsonStandardObj(iterationRow):
      if d>="11":
         d = int(d)-1
      elif d=="02":
-        pass   
+        substractDay = True
+        pass 
+     elif d == "03":
+        substractDay = True
+        pass  
      else:
         d = int(d)-1
         d = "0"+str(d)
 
     y=str(y)
-    m="0"+str(m)
+    if(m<=9):
+        m="0"+str(m)
+    else:
+        m=str(m)
     d = str(d)
     if d == "01":
         dateToCompare=prev_last_daymonth
-    elif d=="02":
+    elif d=="02" and substractDay==True:
         d = int(d)-1
         d = "0"+str(d)
         dateToCompare=m+"/"+d+"/"+y
+    elif d=="03" and substractDay==True:
+        d = int(d)-1
+        d = "0"+str(d)
+        dateToCompare=m+"/"+d+"/"+y    
     else:
         dateToCompare=m+"/"+d+"/"+y
             
-    if day.date == '12/31/2023':
-        monthsCopy2023=createCopyObjMonthsPerYear(day.date[6:])
-        year = Years(day.date[6:11],monthsCopy2023)
+    if day.date == '12/31/2024':
+        monthsCopy2024=createCopyObjMonthsPerYear(day.date[6:])
+        year = Years(day.date[6:11],monthsCopy2024)
         years.append(year)
         global yearsCopy
         yearsCopy=years.copy()
         clearMonthListValues()     
     elif day.date ==  dateToCompare:
-        monthsCopy2024=createCopyObjMonthsPerYear(day.date[6:])
-        year = Years(day.date[6:11],monthsCopy2024)
+        monthsCopy2025=createCopyObjMonthsPerYear(day.date[6:])
+        year = Years(day.date[6:11],monthsCopy2025)
         yearsCopy.append(year)
         data = Data(yearsCopy)
         global responseGeneralObject
@@ -248,6 +261,20 @@ def createCopyObjMonthsPerYear(year):
         monthCopy2024.noviembre=month.noviembre.copy()
         monthCopy2024.diciembre=month.diciembre.copy()  
         return monthCopy2024
+    elif year=='2025':
+        monthCopy2025.enero=month.enero.copy()
+        monthCopy2025.febrero=month.febrero.copy()
+        monthCopy2025.marzo=month.marzo.copy()
+        monthCopy2025.abril=month.abril.copy()
+        monthCopy2025.mayo=month.mayo.copy()
+        monthCopy2025.junio=month.junio.copy()
+        monthCopy2025.julio=month.julio.copy()
+        monthCopy2025.agosto=month.agosto.copy()
+        monthCopy2025.septiembre=month.septiembre.copy()
+        monthCopy2025.octubre=month.octubre.copy()
+        monthCopy2025.noviembre=month.noviembre.copy()
+        monthCopy2025.diciembre=month.diciembre.copy()  
+        return monthCopy2025
 
 def main():
     print("Start process to get data from history database Master")
